@@ -7,7 +7,8 @@ $fields = json_decode($object->get('fields'), 1);
 $result = array();
 $xpdo = &$object->xpdo;
 
-$c = $xpdo->getCollection('productdbFormtabs');
+$c = $xpdo->newQuery('productdbFormtabs');
+$c->where(array('type' => 'global'));  
 if ($collection = $xpdo->getCollection('productdbFormtabs',$c)){
     foreach ($collection as $formtab_object){
         $search = array();
@@ -28,6 +29,42 @@ if ($collection = $xpdo->getCollection('productdbFormtabs',$c)){
                 $related_object->set($field,$object->get($fieldname));
             }
             $related_object->save();
+        }
+    }
+}
+
+$c = $xpdo->newQuery('productdbLang');
+$c->where(array('published' => 1));
+if ($lang_collection = $xpdo->getCollection('productdbLang', $c)) {
+    foreach ($lang_collection as $lang_o) {
+        $lang_key = $lang_o->get('lang_key');
+        $language = $lang_o->get('language');
+
+        $c = $xpdo->newQuery('productdbFormtabs');
+        $c->where(array('type' => 'translations'));
+        if ($collection = $xpdo->getCollection('productdbFormtabs', $c)) {
+            foreach ($collection as $formtab_object) {
+                $search = array();
+                $search['product_id'] = $object->get('id');
+                $search['lang_key'] = $lang_key;
+                $classname = 'productdbTranslationRow';
+                if ($related_object = $xpdo->getObject($classname,$search)){
+            
+                } else {
+                    $related_object = $xpdo->newObject($classname);
+                    $related_object->fromArray($search);
+                }
+        
+                $fields = json_decode($formtab_object->get('fields'),1);
+                if (is_array($fields)){
+                    foreach ($fields as $field){
+                        $fieldname = isset($field['field']) ? 'Trans_' . $lang_key . '_' . $field['field'] : '';
+                        $field = isset($field['field']) ? $field['field'] : '';
+                        $related_object->set($field,$object->get($fieldname));
+                    }
+                    $related_object->save();
+                }
+            }
         }
     }
 }
