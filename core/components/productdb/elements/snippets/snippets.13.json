@@ -1,0 +1,40 @@
+[
+  {
+    "id":47,
+    "source":0,
+    "property_preprocess":false,
+    "name":"productdb_aftersave_formtabs",
+    "description":"",
+    "editor_type":0,
+    "category":0,
+    "cache_type":0,
+    "locked":false,
+    "properties":[
+      
+    ],
+    "moduleguid":"",
+    "static":false,
+    "static_file":"",
+    "filename":"productdb_aftersave_formtabs.snippet.php",
+    "category_name":"productdb"
+  },
+  {
+    "id":48,
+    "source":0,
+    "property_preprocess":false,
+    "name":"productdb_aftersave_product",
+    "description":"",
+    "editor_type":0,
+    "category":0,
+    "cache_type":0,
+    "locked":false,
+    "properties":[
+      
+    ],
+    "moduleguid":"",
+    "static":false,
+    "static_file":"",
+    "filename":"productdb_aftersave_product.snippet.php",
+    "category_name":"productdb"
+  }
+]
