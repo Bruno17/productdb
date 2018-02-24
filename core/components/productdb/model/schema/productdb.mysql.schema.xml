@@ -1,0 +1,43 @@
+<model package="productdb" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" version="1.1">
+    <object class="productdbRow" table="productdb_rows" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="sku" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="deleted" dbtype="int" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="pos" dbtype="int" precision="5" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="published" dbtype="int" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        
+        <composite alias="FlatRow" class="productdbFlatRow" local="id" foreign="product_id" cardinality="one" owner="local" />  
+        <composite alias="Translations" class="productdbTranslationRow" local="id" foreign="product_id" cardinality="many" owner="local" />        
+    </object>
+
+    <object class="productdbFlatRow" table="productdb_flat_rows" extends="xPDOSimpleObject">
+        <field key="product_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="index"/>
+
+        <aggregate alias="Product" class="productdbRow" local="product_id" foreign="id" cardinality="one" owner="local" />
+    </object>
+    
+    <object class="productdbTranslationRow" table="productdb_translation_rows" extends="xPDOSimpleObject">
+        <field key="product_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="index"/>
+        <field key="lang_key" dbtype="varchar" precision="10" phptype="string" null="false" default="" index="index"/>
+
+        <aggregate alias="Product" class="productdbRow" local="product_id" foreign="id" cardinality="one" owner="local" />
+    </object>   
+    
+    <object class="productdbLang" table="productdb_languages" extends="xPDOSimpleObject">
+        <field key="language" dbtype="varchar" precision="50" phptype="string" null="false" default="" index="index" />
+        <field key="lang_key" dbtype="varchar" precision="10" phptype="string" null="false" default="" index="index" />
+        <field key="lang_dir" dbtype="varchar" precision="3" phptype="string" null="false" default="ltr" />        
+        <field key="published" dbtype="int" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="properties" dbtype="text" phptype="array" null="true" />
+        <field key="pos" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+    </object>
+    
+    <object class="productdbFormtabs" table="productdb_formtabs" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="150" phptype="string" null="false" default="" index="index" />
+        <field key="type" dbtype="varchar" precision="150" phptype="string" null="false" default="" index="index" />
+        <field key="fields" dbtype="text" phptype="string" null="true" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="properties" dbtype="text" phptype="array" null="true" />
+    </object>     
+    
+</model>
