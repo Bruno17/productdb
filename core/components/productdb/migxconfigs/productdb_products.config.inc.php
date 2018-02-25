@@ -44,6 +44,8 @@ if ($collection = $xpdo->getCollection('productdbFormtabs', $c)) {
                 $formfield = array();
                 $formfield['field'] = isset($field['field']) ? 'FlatRow_' . $field['field'] : '';
                 $formfield['caption'] = isset($field['caption']) ? $field['caption'] : '';
+                $formfield['inputTVtype'] = isset($field['inputTVtype']) ? $field['inputTVtype'] : '';
+                $formfield['inputOptionValues'] = isset($field['inputOptionValues']) ? $field['inputOptionValues'] : '';
                 $tab['fields'][] = $formfield;
             }
 
@@ -80,6 +82,8 @@ if ($lang_collection = $xpdo->getCollection('productdbLang', $c)) {
                         $formfield = array();
                         $formfield['field'] = isset($field['field']) ? 'Trans_' . $lang_key . '_' . $field['field']  : '';
                         $formfield['caption'] = isset($field['caption']) ? $field['caption'] : '';
+                        $formfield['inputTVtype'] = isset($field['inputTVtype']) ? $field['inputTVtype'] : '';
+                        $formfield['inputOptionValues'] = isset($field['inputOptionValues']) ? $field['inputOptionValues'] : '';
                         $tab['fields'][] = $formfield;
                     }
 
